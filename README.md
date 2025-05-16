@@ -32,16 +32,12 @@ Este repositório contém um sistema bancário modular completo, dividido em mic
    - `ClienteController` (`/api/cliente`): endpoints públicos de cliente
    - `TestController` (`/api/test/hello`): endpoint de teste protegido
 
----
-
-## 🎯 O que Falta / Melhorias Imediatas
+## 🎯 Melhorias Futuras Imediatas
 
 - **Validação de Inputs**: adicionar `@Valid` e DTOs de request com restrições (Bean Validation)
 - **Tratamento Global de Erros**: implementar `@ControllerAdvice` para respostas padronizadas
 - **Limitações de Taxa (Rate Limiting)**: proteger endpoints contra abuso
 - **Logs e Monitoramento**: integrar SLF4J/Micrometer para métricas e tracing
-
----
 
 ## 🌱 Funcionalidades Futuras
 
