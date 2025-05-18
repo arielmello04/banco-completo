@@ -1,3 +1,5 @@
+// src/app/models/dashboard-graficos.dto.ts
+
 import { DashboardService } from '../services/dashboard.service';
 
 
@@ -12,7 +14,7 @@ export interface ContagemPorTipoDTO {
 }
 
 export interface DashboardGraficosDTO {
-  saldoPorDia: { data: string; valor: number }[];
-  transacoesPorDia: { data: string; valor: number }[];
-  contagemPorTipo: { tipo: string; quantidade: number }[];
+  saldoTotalPorDia: SerieTemporalDTO[];
+  transacoesPorDia: SerieTemporalDTO[];
+  transacoesPorTipo: ContagemPorTipoDTO[];
 }

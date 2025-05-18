@@ -3,24 +3,26 @@
 
   <ng-container *ngIf="dados">
     <app-dashboard-chart
-      [title]="'Saldo por Dia'"
-      [labels]="dados.saldoPorDia.map(p => p.data)"
-      [data]="dados.saldoPorDia.map(p => p.valor)"
-      chartType="line"
-    ></app-dashboard-chart>
+  [title]="'Saldo por Dia'"
+  [labels]="labelsSaldo"
+  [data]="dataSaldo"
+  chartType="line"
+></app-dashboard-chart>
 
-    <app-dashboard-chart
-      [title]="'Transações por Dia'"
-      [labels]="dados.transacoesPorDia.map(p => p.data)"
-      [data]="dados.transacoesPorDia.map(p => p.valor)"
-      chartType="bar"
-    ></app-dashboard-chart>
+<app-dashboard-chart
+  [title]="'Transações por Dia'"
+  [labels]="labelsTransacoes"
+  [data]="dataTransacoes"
+  chartType="bar"
+></app-dashboard-chart>
 
-    <app-dashboard-chart
-      [title]="'Transações por Tipo'"
-      [labels]="dados.contagemPorTipo.map(p => p.tipo)"
-      [data]="dados.contagemPorTipo.map(p => p.quantidade)"
-      chartType="doughnut"
-    ></app-dashboard-chart>
+<app-dashboard-chart
+  [title]="'Transações por Tipo'"
+  [labels]="labelsTipos"
+  [data]="dataTipos"
+  chartType="doughnut"
+></app-dashboard-chart>
+
+
   </ng-container>
 </div>

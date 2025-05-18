@@ -1,0 +1,19 @@
+<div class="login-container">
+  <h2>Login</h2>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input id="email" formControlName="email" type="email" class="form-control" />
+    </div>
+
+    <div class="form-group">
+      <label for="senha">Senha</label>
+      <input id="senha" formControlName="senha" type="password" class="form-control" />
+    </div>
+
+    <button type="submit" [disabled]="form.invalid" class="btn btn-primary">Entrar</button>
+  </form>
+
+  <p *ngIf="error" class="text-danger mt-2">{{ error }}</p>
+</div>

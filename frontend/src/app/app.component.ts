@@ -1,10 +1,13 @@
+// src/app/app.component.ts
 import { Component } from '@angular/core';
-import { DashboardComponent } from './components/dashboard.component';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [DashboardComponent], // Apenas componentes standalone aqui!
-  templateUrl: './app.component.html',
+  imports: [RouterModule],
+  template: `<router-outlet></router-outlet>`,
 })
-export class AppComponent {}
+export class AppComponent {
+  title = 'Meu Banco';
+}
