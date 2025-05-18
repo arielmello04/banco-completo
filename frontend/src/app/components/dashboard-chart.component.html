@@ -1,9 +1,11 @@
-<div style="margin-bottom: 2rem;">
-  <h4>{{ title }}</h4>
-  <canvas
-    baseChart
-    [data]="chartData"
-    [options]="chartOptions"
-    [type]="chartType">
-  </canvas>
+<div class="chart-container">
+  <h4 class="chart-title">{{ title }}</h4>
+  <div class="chart-wrapper">
+    <canvas
+      baseChart
+      [data]="chartData"
+      [options]="chartOptions"
+      [type]="chartType">
+    </canvas>
+  </div>
 </div>
