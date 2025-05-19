@@ -1,8 +1,9 @@
 package com.meuprojeto.auth_service.controller;
 
-import com.meuprojeto.auth_service.dto.ContaAdminDTO;
+import com.meuprojeto.auth_service.dto.ContaGerenteDTO;
 import com.meuprojeto.auth_service.service.ContaService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -13,14 +14,14 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/gerente/contas")
 @RequiredArgsConstructor
-public class ContaAdminController {
+public class GerenteContaController {
 
     private final ContaService contaService;
 
     @GetMapping
     @PreAuthorize("hasRole('GERENTE')")
-    public ResponseEntity<List<ContaAdminDTO>> listarTodasContas() {
-        List<ContaAdminDTO> contas = contaService.listarTodasContas();
+    public ResponseEntity<List<ContaGerenteDTO>> listarTodasContas() {
+        List<ContaGerenteDTO> contas = contaService.listarTodasContas();
         return ResponseEntity.ok(contas);
     }
 
@@ -61,5 +62,19 @@ public class ContaAdminController {
                 .header("Content-Type", "application/pdf")
                 .body(pdf);
     }
+
+    @GetMapping("/filtro")
+    @PreAuthorize("hasRole('GERENTE')")
+    public ResponseEntity<Page<ContaGerenteDTO>> filtrarContas(
+            @RequestParam(required = false) String agencia,
+            @RequestParam(required = false) String nome,
+            @RequestParam(required = false) BigDecimal saldoMin,
+            @RequestParam(required = false) BigDecimal saldoMax,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size
+    ) {
+        return ResponseEntity.ok(contaService.filtrarContas(agencia, nome, saldoMin, saldoMax, page, size));
+    }
+
 
 }

@@ -8,11 +8,12 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class DashboardService {
-  private readonly API = 'http://localhost:8081/api/gerente/dashboard/graficos';
+  private readonly API = 'http://localhost:8081/api/dashboard';
 
   constructor(private http: HttpClient) {}
 
   getGraficos(): Observable<DashboardGraficosDTO> {
-    return this.http.get<DashboardGraficosDTO>(this.API);
-  }
+  return this.http.get<DashboardGraficosDTO>(`${this.API}/graficos`);
+}
+
 }

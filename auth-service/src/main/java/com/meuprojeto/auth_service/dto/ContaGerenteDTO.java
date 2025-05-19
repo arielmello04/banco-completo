@@ -2,7 +2,7 @@ package com.meuprojeto.auth_service.dto;
 
 import java.math.BigDecimal;
 
-public record ContaAdminDTO(
+public record ContaGerenteDTO(
         Long id,
         String agencia,
         String numeroConta,

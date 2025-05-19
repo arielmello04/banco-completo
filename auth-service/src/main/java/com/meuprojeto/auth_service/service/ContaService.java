@@ -9,6 +9,7 @@ import com.meuprojeto.auth_service.entity.*;
 import com.meuprojeto.auth_service.repository.ContaRepository;
 import com.meuprojeto.auth_service.repository.TransacaoRepository;
 import com.meuprojeto.auth_service.repository.UserRepository;
+import com.meuprojeto.auth_service.spec.ContaSpecs;
 import com.meuprojeto.auth_service.spec.TransacaoSpecs;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -192,9 +193,9 @@ public class ContaService {
     }
 
 
-    public List<ContaAdminDTO> listarTodasContas() {
+    public List<ContaGerenteDTO> listarTodasContas() {
         return contaRepository.findAll().stream().map(conta ->
-                new ContaAdminDTO(
+                new ContaGerenteDTO(
                         conta.getId(),
                         conta.getAgencia(),
                         conta.getNumeroConta(),
@@ -371,12 +372,12 @@ public class ContaService {
     }
 
     public byte[] exportarContasCsv() {
-        List<ContaAdminDTO> contas = listarTodasContas();
+        List<ContaGerenteDTO> contas = listarTodasContas();
 
         StringBuilder sb = new StringBuilder();
         sb.append("ID,Agência,Número da Conta,Saldo,Nome do Usuário,Email do Usuário\n");
 
-        for (ContaAdminDTO conta : contas) {
+        for (ContaGerenteDTO conta : contas) {
             sb.append(conta.id()).append(",")
                     .append(conta.agencia()).append(",")
                     .append(conta.numeroConta()).append(",")
@@ -390,7 +391,7 @@ public class ContaService {
     }
 
     public byte[] gerarContasPdf() {
-        List<ContaAdminDTO> contas = listarTodasContas();
+        List<ContaGerenteDTO> contas = listarTodasContas();
 
         try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
             Document document = new Document(PageSize.A4);
@@ -422,7 +423,7 @@ public class ContaService {
                 table.addCell(cell);
             });
 
-            for (ContaAdminDTO c : contas) {
+            for (ContaGerenteDTO c : contas) {
                 table.addCell(String.valueOf(c.id()));
                 table.addCell(c.agencia());
                 table.addCell(c.numeroConta());
@@ -441,7 +442,7 @@ public class ContaService {
     }
 
     public byte[] gerarContasPdfFiltrado(String agencia, String nome, BigDecimal saldoMin, BigDecimal saldoMax) {
-        List<ContaAdminDTO> contas = listarTodasContas().stream()
+        List<ContaGerenteDTO> contas = listarTodasContas().stream()
                 .filter(c -> agencia == null || c.agencia().equalsIgnoreCase(agencia))
                 .filter(c -> nome == null || c.nomeUsuario().toLowerCase().contains(nome.toLowerCase()))
                 .filter(c -> saldoMin == null || c.saldo().compareTo(saldoMin) >= 0)
@@ -451,7 +452,7 @@ public class ContaService {
         return gerarPdfContas(contas);
     }
 
-    private byte[] gerarPdfContas(List<ContaAdminDTO> contas) {
+    private byte[] gerarPdfContas(List<ContaGerenteDTO> contas) {
         try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
             Document document = new Document(PageSize.A4);
             PdfWriter writer = PdfWriter.getInstance(document, baos);
@@ -482,7 +483,7 @@ public class ContaService {
                 table.addCell(cell);
             });
 
-            for (ContaAdminDTO c : contas) {
+            for (ContaGerenteDTO c : contas) {
                 table.addCell(String.valueOf(c.id()));
                 table.addCell(c.agencia());
                 table.addCell(c.numeroConta());
@@ -582,6 +583,25 @@ public class ContaService {
                 .toList();
 
         return new DashboardGraficosDTO(saldoDiario, porDia, porTipo);
+    }
+
+    public Page<ContaGerenteDTO> filtrarContas(String agencia, String nome, BigDecimal saldoMin, BigDecimal saldoMax, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by("id").descending());
+
+        Specification<ContaBancaria> spec = Specification
+                .where(ContaSpecs.porAgencia(agencia))
+                .and(ContaSpecs.porNomeUsuario(nome))
+                .and(ContaSpecs.saldoEntre(saldoMin, saldoMax));
+
+        return contaRepository.findAll(spec, pageable)
+                .map(conta -> new ContaGerenteDTO(
+                        conta.getId(),
+                        conta.getAgencia(),
+                        conta.getNumeroConta(),
+                        conta.getSaldo(),
+                        conta.getUsuario().getNome(),
+                        conta.getUsuario().getEmail()
+                ));
     }
 
 }

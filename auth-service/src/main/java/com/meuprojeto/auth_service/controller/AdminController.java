@@ -22,22 +22,4 @@ public class AdminController {
     public ResponseEntity<String> adminDashboard() {
         return ResponseEntity.ok("Área do ADMIN");
     }
-
-    @GetMapping("/dashboard")
-    @PreAuthorize("hasAnyRole('GERENTE', 'ADMIN')")
-    public ResponseEntity<DashboardResumoDTO> dashboardComFiltro(
-            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dataInicio,
-            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dataFim
-    ) {
-        return ResponseEntity.ok(contaService.gerarResumoDashboard(dataInicio, dataFim));
-    }
-
-    @GetMapping("/dashboard/graficos")
-    @PreAuthorize("hasAnyRole('GERENTE', 'ADMIN')")
-    public ResponseEntity<DashboardGraficosDTO> graficos(
-            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate inicio,
-            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fim
-    ) {
-        return ResponseEntity.ok(contaService.gerarGraficosDashboard(inicio, fim));
-    }
 }

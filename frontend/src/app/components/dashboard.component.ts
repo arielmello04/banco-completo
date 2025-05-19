@@ -30,10 +30,16 @@ ngOnInit(): void {
     next: (res) => {
       console.log('Dados recebidos:', res);
       this.dados = res;
-      this.labelsSaldo = res.saldoTotalPorDia.map(p => p.data);
+      this.labelsSaldo = res.saldoTotalPorDia.map(p => {
+        const [ano, mes, dia] = p.data.split('-');
+        return `${dia}/${mes}/${ano}`;
+      });
       this.dataSaldo = res.saldoTotalPorDia.map(p => p.valor);
 
-      this.labelsTransacoes = res.transacoesPorDia.map(p => p.data);
+      this.labelsTransacoes = res.transacoesPorDia.map(p => {
+        const [ano, mes, dia] = p.data.split('-');
+        return `${dia}/${mes}/${ano}`;
+      });
       this.dataTransacoes = res.transacoesPorDia.map(p => p.valor);
 
       this.labelsTipos = res.transacoesPorTipo.map(p => p.tipo);
