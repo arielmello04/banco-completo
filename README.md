@@ -1,5 +1,5 @@
 # 🏦 Projeto Bancário Modular
-Este repositório contém um sistema bancário modular completo, dividido em micro-serviços Java Spring Boot e um front-end em Angular. O objetivo é demonstrar boas práticas de desenvolvimento full-stack: segurança, testes, CI/CD e deploy.
+Este repositório contém um sistema bancário modular completo, dividido em micro-serviços Java Spring Boot, um front-end em Angular e banco de dados PostgreSQL. O objetivo é demonstrar boas práticas de desenvolvimento full-stack: segurança, testes, CI/CD e deploy.
 
 ---
 
