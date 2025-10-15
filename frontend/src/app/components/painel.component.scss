@@ -1,24 +1,102 @@
-.painel-container {
-  max-width: 500px;
-  margin: 3rem auto;
-  text-align: center;
+:root {
+  --bg-1: #0b0614;
+  --bg-2: #171022;
+  --text: #e5e7eb;
+  --muted: #a3a3a3;
+  --primary: #7c3aed;
+  --card: rgba(255,255,255,0.06);
+  --stroke: rgba(255,255,255,0.12);
+}
 
-  h2 {
-    margin-bottom: 2rem;
-    text-transform: uppercase;
+.painel {
+  min-height: 100dvh;
+  color: var(--text);
+  background:
+    radial-gradient(900px 400px at 80% 10%, rgba(124,58,237,0.25), transparent 60%),
+    radial-gradient(700px 350px at 10% 90%, rgba(255,122,0,0.15), transparent 60%),
+    linear-gradient(160deg, var(--bg-1), var(--bg-2));
+  padding: 28px;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.hero {
+  display: grid;
+  gap: 16px;
+  margin-bottom: 18px;
+  align-items: center;
+}
+
+.brand {
+  display: flex; align-items: center; gap: 12px;
+  .logo {
+    width: 48px; height: 48px; border-radius: 14px;
+    display: grid; place-items: center; font-weight: 700; color: #fff;
+    background: linear-gradient(135deg, var(--primary), #a855f7);
+    box-shadow: 0 10px 24px rgba(124,58,237,0.35);
   }
-
-  button {
-    padding: 0.6rem 1.2rem;
-    font-size: 1rem;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-
-    &:hover {
-      background-color: #0056b3;
-    }
+  h2 { margin: 0; font-size: 1.6rem; }
+  .muted { margin: 2px 0 0; color: var(--muted); }
+  .role {
+    display: inline-block;
+    padding: 2px 8px; margin-left: 6px;
+    border-radius: 999px;
+    background: rgba(124,58,237,0.2);
+    border: 1px solid var(--stroke);
+    color: var(--text);
+    font-size: .85rem;
   }
 }
+
+.actions { display: flex; gap: 10px; align-items: center; }
+
+.btn-primary {
+  padding: 12px 16px; border-radius: 14px; border: 0; cursor: pointer;
+  background: linear-gradient(135deg, var(--primary), #a855f7);
+  color: rgb(0, 0, 0); font-weight: 600;
+  box-shadow: 0 10px 24px rgba(124,58,237,0.35);
+  transition: transform .06s ease, opacity .2s;
+  &:active { transform: translateY(1px); }
+  &:disabled { opacity: .7; cursor: not-allowed; }
+}
+
+.grid {
+  display: grid; gap: 16px;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--stroke);
+  border-radius: 20px;
+  padding: 18px;
+  backdrop-filter: blur(6px);
+}
+
+.card.highlight {
+  background: linear-gradient(135deg, rgba(124,58,237,.25), rgba(124,58,237,.05));
+  box-shadow: 0 10px 30px rgba(124,58,237,.25);
+}
+
+.desc { color: var(--muted); margin: 8px 0 12px; }
+
+.chips, .links { display: flex; flex-wrap: wrap; gap: 8px; }
+
+.chip {
+  border: 1px solid var(--stroke);
+  background: transparent;
+  color: var(--text);
+  padding: 8px 12px;
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+.list { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; }
+.list li { display: flex; justify-content: space-between; }
+
+.btn-outline {
+  padding: 10px 14px; border-radius: 12px; cursor: pointer;
+  background: transparent; color: var(--text);
+  border: 1px solid var(--stroke);
+}
+
+.btn-outline:hover { background: rgba(255,255,255,0.06); }

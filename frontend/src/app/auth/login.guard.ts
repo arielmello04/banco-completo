@@ -8,15 +8,8 @@ export const loginGuard: CanActivateFn = () => {
   const router = inject(Router);
 
   if (auth.isLoggedIn()) {
-    const role = auth.getUserRole();
-    if (role === 'ADMIN' || role === 'GERENTE') {
-      router.navigateByUrl('/painel');
-    } else {
-      router.navigateByUrl('/dashboard');
-    }
-    return false;
+    return router.createUrlTree(['/painel']);
   }
 
   return true;
 };
-

@@ -1,19 +1,50 @@
-<div class="login-container">
-  <h2>Login</h2>
+<div class="auth-bg">
+  <div class="auth-card">
+    <div class="brand">
 
-  <form [formGroup]="form" (ngSubmit)="onSubmit()">
-    <div class="form-group">
-      <label for="email">Email</label>
-      <input id="email" formControlName="email" type="email" class="form-control" />
+      <img class="logo" src="/assets/images/logo.jpg" alt="Logo" />
+
+      <p class="subtitle">Acesse sua conta com segurança</p>
     </div>
 
-    <div class="form-group">
-      <label for="senha">Senha</label>
-      <input id="senha" formControlName="senha" type="password" class="form-control" />
-    </div>
+    <form [formGroup]="form" (ngSubmit)="submit()" novalidate>
+      <div class="field" [class.invalid]="form.get('email')?.touched && form.get('email')?.invalid">
+        <label for="email">Email</label>
+        <input id="email" type="email" placeholder="voce@exemplo.com" formControlName="email" />
+        <small *ngIf="form.get('email')?.touched && form.get('email')?.errors?.['required']">Informe seu email</small>
+        <small *ngIf="form.get('email')?.touched && form.get('email')?.errors?.['email']">Email inválido</small>
+      </div>
 
-    <button type="submit" [disabled]="form.invalid" class="btn btn-primary">Entrar</button>
-  </form>
+      <div class="field" [class.invalid]="form.get('password')?.touched && form.get('password')?.invalid">
+        <label for="password">Senha</label>
+        <div class="password-wrap">
+          <input [type]="hidePassword() ? 'password' : 'text'" id="password" placeholder="Sua senha" formControlName="password" />
+          <button type="button" class="toggle" (click)="hidePassword.set(!hidePassword())">
+            {{ hidePassword() ? 'Mostrar' : 'Ocultar' }}
+          </button>
+        </div>
+        <small *ngIf="form.get('password')?.touched && form.get('password')?.errors?.['required']">Informe sua senha</small>
+        <small *ngIf="form.get('password')?.touched && form.get('password')?.errors?.['minlength']">Mínimo de 6 caracteres</small>
+      </div>
 
-  <p *ngIf="error" class="text-danger mt-2">{{ error }}</p>
+      <div class="actions">
+        <label class="remember">
+          <input type="checkbox" formControlName="remember" />
+          <span>Lembrar de mim</span>
+        </label>
+        <a class="link" routerLink="/recuperar">Esqueci minha senha</a>
+      </div>
+
+      <button class="btn-primary" type="submit" [disabled]="loading()">
+        <span *ngIf="!loading()">Entrar</span>
+        <span *ngIf="loading()" class="spinner"></span>
+      </button>
+
+      <p class="error" *ngIf="errorMsg()">{{ errorMsg() }}</p>
+
+      <p class="fineprint">
+        Ao continuar, você concorda com nossos Termos e Política de Privacidade.
+      </p>
+    </form>
+  </div>
 </div>

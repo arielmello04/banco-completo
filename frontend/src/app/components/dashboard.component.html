@@ -1,28 +1,52 @@
-<div class="container">
-  <h2>Dashboard de Gráficos</h2>
+<div class="dash">
+  <header class="hero">
+    <div class="brand">
+      <div class="actions">
+        <button class="btn-outline" (click)="sair()">Voltar ao login</button>
+      </div>
+      <img class="logo" src="/assets/images/logo.jpg" alt="Logo" />
+      <div>
+        <h2>Dashboard</h2>
+        <p class="muted">Resumo e gráficos do seu período</p>
+      </div>
+    </div>
 
-  <ng-container *ngIf="dados">
+    <div class="kpis">
+      <div class="kpi">
+        <span>Total de transações</span>
+        <strong>{{ dataTransacoes.length || 0 }}</strong>
+      </div>
+      <div class="kpi">
+        <span>Último saldo</span>
+        <strong>{{ (dataSaldo[dataSaldo.length-1] || 0) | number:'1.2-2' }}</strong>
+      </div>
+      <div class="kpi">
+        <span>Tipos</span>
+        <strong>{{ labelsTipos.length || 0 }}</strong>
+      </div>
+    </div>
+  </header>
+
+  <section class="grid" *ngIf="dados">
     <app-dashboard-chart
-  [title]="'Saldo por Dia'"
-  [labels]="labelsSaldo"
-  [data]="dataSaldo"
-  chartType="line"
-></app-dashboard-chart>
+      [title]="'Saldo por Dia'"
+      [labels]="labelsSaldo"
+      [data]="dataSaldo"
+      chartType="line">
+    </app-dashboard-chart>
 
-<app-dashboard-chart
-  [title]="'Transações por Dia'"
-  [labels]="labelsTransacoes"
-  [data]="dataTransacoes"
-  chartType="bar"
-></app-dashboard-chart>
+    <app-dashboard-chart
+      [title]="'Transações por Dia'"
+      [labels]="labelsTransacoes"
+      [data]="dataTransacoes"
+      chartType="bar">
+    </app-dashboard-chart>
 
-<app-dashboard-chart
-  [title]="'Transações por Tipo'"
-  [labels]="labelsTipos"
-  [data]="dataTipos"
-  chartType="doughnut"
-></app-dashboard-chart>
-
-
-  </ng-container>
+    <app-dashboard-chart
+      [title]="'Transações por Tipo'"
+      [labels]="labelsTipos"
+      [data]="dataTipos"
+      chartType="doughnut">
+    </app-dashboard-chart>
+  </section>
 </div>

@@ -14,6 +14,11 @@ export class PainelComponent implements OnInit {
   role: string | null = null;
 
   constructor(private auth: AuthService, private router: Router) {}
+  sair() {
+  this.auth.logout?.();
+  localStorage.removeItem('token');
+  this.router.navigateByUrl('/login');
+  }
 
   ngOnInit(): void {
     this.role = this.auth.getUserRole();

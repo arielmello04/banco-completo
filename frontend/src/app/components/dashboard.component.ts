@@ -1,20 +1,33 @@
 // src/app/components/dashboard.component.ts
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 import { DashboardChartComponent } from './dashboard-chart.component';
 import { DashboardService } from '../services/dashboard.service';
 import { DashboardGraficosDTO } from '../models/dashboard-graficos.dto';
+import { AuthService } from '../auth/auth.service';
+
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
   imports: [CommonModule, DashboardChartComponent],
   templateUrl: './dashboard.component.html',
+  styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
   dados: DashboardGraficosDTO | null = null;
 
-  constructor(private dashboardService: DashboardService) {}
+  constructor(
+    private dashboardService: DashboardService,
+    private auth: AuthService,
+    private router: Router
+  ) {}
+  sair() {
+    this.auth.logout?.();
+    localStorage.removeItem('token');
+    this.router.navigateByUrl('/login');
+  }
 
   labelsSaldo: string[] = [];
 dataSaldo: number[] = [];

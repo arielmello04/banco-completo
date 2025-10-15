@@ -1,5 +1,45 @@
-<div class="painel-container">
-  <h2>Painel do {{ role }}</h2>
+<div class="painel">
+  <header class="hero">
+    <div class="brand">
+      <img class="logo" src="/assets/images/logo.jpg" alt="Logo" />
+      <div>
+        <h2>Painel</h2>
+        <p class="muted">Bem-vindo(a)! Seu perfil atual: <span class="role">{{ role || 'Usuário' }}</span></p>
+      </div>
+    </div>
 
-  <button (click)="irParaDashboard()">Ir para Dashboard</button>
+    <div class="actions">
+        <button class="btn-primary" (click)="irParaDashboard()">Ir para Dashboard</button>
+        <button class="btn-outline" (click)="sair()">Sair</button>    </div>
+  </header>
+
+  <section class="grid">
+    <article class="card highlight">
+      <h3>Resumo</h3>
+      <p class="desc">Acompanhe seus principais indicadores e acesse atalhos rápidos.</p>
+      <div class="chips">
+        <button class="chip">Transações</button>
+        <button class="chip">Relatórios</button>
+        <button class="chip">Configurações</button>
+      </div>
+    </article>
+
+    <article class="card">
+      <h4>Últimas ações</h4>
+      <ul class="list">
+        <li><span>Login realizado</span><strong>Agora</strong></li>
+        <li><span>Perfil atualizado</span><strong>Ontem</strong></li>
+        <li><span>Senha alterada</span><strong>Semana passada</strong></li>
+      </ul>
+    </article>
+
+    <article class="card">
+      <h4>Atalhos</h4>
+      <div class="links">
+        <button class="chip">Meu Perfil</button>
+        <button class="chip">Segurança</button>
+        <button class="chip">Suporte</button>
+      </div>
+    </article>
+  </section>
 </div>

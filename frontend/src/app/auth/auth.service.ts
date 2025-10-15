@@ -51,7 +51,6 @@ export class AuthService {
     const payload = this.getTokenPayload();
     const rawRole = payload?.role;
 
-    // Remove prefixo 'ROLE_' se existir
     return rawRole?.replace('ROLE_', '') ?? null;
   }
 

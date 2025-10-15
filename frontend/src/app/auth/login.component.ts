@@ -1,55 +1,54 @@
 // src/app/auth/login.component.ts
-import { Component, OnInit } from '@angular/core';
+import { Component, signal, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import { AuthService } from './auth.service';
+import { FormBuilder, Validators, ReactiveFormsModule, FormGroup } from '@angular/forms';
+import { Router, RouterLink } from '@angular/router';
+import { HttpErrorResponse } from '@angular/common/http';
+import { AuthService } from './auth.service'; 
 
 @Component({
-  selector: 'app-login',
-  standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
-  templateUrl: './login.component.html',
+selector: 'app-login',
+standalone: true,
+imports: [CommonModule, ReactiveFormsModule, RouterLink],
+templateUrl: './login.component.html',
+styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements OnInit {
-  form!: FormGroup;
-  error = '';
+export class LoginComponent {
+private fb = inject(FormBuilder);
+private auth = inject(AuthService);
+private router = inject(Router);
 
-  constructor(
-    private fb: FormBuilder,
-    private auth: AuthService,
-    private router: Router
-  ) {}
+hidePassword = signal(true);
+loading = signal(false);
+errorMsg = signal('');
 
-  ngOnInit(): void {
-    console.log('LoginComponent carregado');
-    this.form = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
-      senha: ['', Validators.required],
-    });
-  }
+form: FormGroup = this.fb.group({
+email: ['', [Validators.required, Validators.email]],
+password: ['', [Validators.required, Validators.minLength(6)]],
+    remember: [true],
+  });
 
-  onSubmit() {
-  if (this.form.invalid) return;
+  submit() {
+  this.errorMsg.set('');
+  if (this.form.invalid) { this.form.markAllAsTouched(); return; }
 
-  const { email, senha } = this.form.value;
+  this.loading.set(true);
 
-  this.auth.login(email!, senha!).subscribe({
-    next: (res) => {
-      console.log('Login bem-sucedido:', res);
+  const email = this.form.get('email')?.value ?? '';
+  const senha = this.form.get('password')?.value ?? this.form.get('senha')?.value ?? '';
 
-      // Role recebido da resposta da API
-      const role = res.role;
-
-      if (role === 'ADMIN') {
+  this.auth.login(email, senha).subscribe({
+    next: (res: any) => {
+      const token = res?.token ?? res?.accessToken ?? '';
+      if (token) localStorage.setItem('token', token);
       this.router.navigateByUrl('/painel');
-      } else if (role === 'GERENTE') {
-        this.router.navigateByUrl('/painel');
-      } else if (role === 'CLIENTE') {
-        this.router.navigateByUrl('/cliente');
-      }
     },
-    error: () => (this.error = 'Credenciais inválidas'),
+    error: (err: HttpErrorResponse) => {
+      this.errorMsg.set(err.error?.message || 'Falha ao autenticar. Verifique suas credenciais.');
+      this.loading.set(false);
+    },
+    complete: () => this.loading.set(false)
   });
 }
 }
+

@@ -1,36 +1,34 @@
 import { Routes } from '@angular/router';
-import { LoginComponent } from './auth/login.component';
 import { loginGuard } from './auth/login.guard';
 import { authGuard } from './auth/auth.guard';
 
 export const routes: Routes = [
-  {
-  path: '',
-  loadComponent: () => import('./home-redirect.component').then(m => m.HomeRedirectComponent),
-},
+{ path: '', pathMatch: 'full', redirectTo: 'login' },
+
+{
+path: 'login',
+canActivate: [loginGuard],
+loadComponent: () =>
+      import('./auth/login.component').then(m => m.LoginComponent),
+  },
   {
     path: 'dashboard',
     canActivate: [authGuard],
-    data: { roles: ['GERENTE', 'ADMIN'] },
-    loadComponent: () => import('./components/dashboard.component').then(m => m.DashboardComponent),
-  },
-  {
-    path: 'login',
-    component: LoginComponent,
-    canActivate: [loginGuard],
+    
+    loadComponent: () =>
+      import('./components/dashboard.component').then(m => m.DashboardComponent),
   },
   {
     path: 'painel',
     canActivate: [authGuard],
-    data: { roles: ['GERENTE', 'ADMIN'] },
-    loadComponent: () => import('./components/painel.component').then(m => m.PainelComponent),
+
+    loadComponent: () =>
+      import('./components/painel.component').then(m => m.PainelComponent),
   },
   {
     path: 'unauthorized',
-    loadComponent: () => import('./auth/unauthorized.component').then(m => m.UnauthorizedComponent),
+    loadComponent: () =>
+      import('./auth/unauthorized.component').then(m => m.UnauthorizedComponent),
   },
-  {
-    path: '**',
-    redirectTo: 'login',
-  }
+  { path: '**', redirectTo: 'login' },
 ];
