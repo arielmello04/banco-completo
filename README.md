@@ -2,6 +2,14 @@
 Este repositório contém um sistema bancário modular completo, dividido em micro-serviços Java Spring Boot, um front-end em Angular e banco de dados PostgreSQL. O objetivo é demonstrar boas práticas de desenvolvimento full-stack: segurança, testes, CI/CD e deploy.
 
 ---
+## Mídia
+
+![Imagem 1](./assets/images/1.png)
+![Imagem 2](./assets/images/2.png)
+![Imagem 3](./assets/images/3.png)
+![Imagem 4](./assets/images/4.png)
+![Imagem 5](./assets/images/5.png)
+![Imagem 6](./assets/images/6.png)
 
 ## Estrutura do Projeto
 - **auth-service/**: serviço de autenticação (JWT, Spring Security) 🔒
