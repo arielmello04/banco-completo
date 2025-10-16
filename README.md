@@ -4,12 +4,9 @@ Este repositório contém um sistema bancário modular completo, dividido em mic
 ---
 ## Mídia
 
-![Imagem 1](./assets/images/1.png)
-![Imagem 2](./assets/images/2.png)
-![Imagem 3](./assets/images/3.png)
-![Imagem 4](./assets/images/4.png)
-![Imagem 5](./assets/images/5.png)
-![Imagem 6](./assets/images/6.png)
+![Imagem 1](./frontend/src/assets/images/1.png)
+![Imagem 2](./frontend/src/assets/images/2.png)
+![Imagem 3](./frontend/src/assets/images/3.PNG)
 
 ## Estrutura do Projeto
 - **auth-service/**: serviço de autenticação (JWT, Spring Security) 🔒
