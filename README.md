@@ -32,21 +32,6 @@ Este repositório contém um sistema bancário modular completo, dividido em mic
    - `ClienteController` (`/api/cliente`): endpoints públicos de cliente
    - `TestController` (`/api/test/hello`): endpoint de teste protegido
 
-## 🎯 Melhorias Futuras Imediatas
-
-- **Validação de Inputs**: adicionar `@Valid` e DTOs de request com restrições (Bean Validation)
-- **Tratamento Global de Erros**: implementar `@ControllerAdvice` para respostas padronizadas
-- **Limitações de Taxa (Rate Limiting)**: proteger endpoints contra abuso
-- **Logs e Monitoramento**: integrar SLF4J/Micrometer para métricas e tracing
-
-## 🌱 Funcionalidades Futuras
-
-- **Refresh Token**: endpoint para renovação de JWT sem re-login completo
-- **Single Sign-On (SSO)**: integração com OAuth2/OpenID Connect (Google, Facebook)
-- **Multi-Factor Authentication (MFA)**: adicionar autenticação por SMS/app de autenticação
-- **Segurança Avançada**: CSP, CORS refinado e proteção CSRF opcional para endpoints críticos
-- **Admin UI**: painel web leve para gestão de usuários e logs de autenticação
-
 ---
 ## 🛠 Tecnologias
 - **Back-end**: Java 17, Spring Boot, Spring Data JPA, Spring Security, JWT
@@ -54,7 +39,7 @@ Este repositório contém um sistema bancário modular completo, dividido em mic
 - **Banco de Dados**: PostgreSQL
 - **Mensageria**: RabbitMQ (ou Kafka)
 - **CI/CD**: GitHub Actions (build, test, Docker)
-- **Deploy**: Docker Compose (desenvolvimento) / Kubernetes, AWS ou Heroku (produção)
+- **Deploy**: Docker Compose (desenvolvimento)
 
 ---
 
